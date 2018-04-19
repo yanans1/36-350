@@ -7,15 +7,15 @@ generate_data=function(n,p){
 }
 
 model_select=function(covariates, responses,cutoff){
-  res=lm(responses ~ covariates)
-  res.sum=summary(res)
-  p.val=res.sum$coefficients[2:(ncol(covariates)+1),"Pr(>|t|)"]
-  valid_cov=covariates[,p.val<=cutoff]
-  if(length(valid_cov)==0) return(c())
-  new=lm(responses~valid_cov)
-  new.sum=summary(new)
-  new.pval=new.sum$coefficients[,"Pr(>|t|)"]
-  return(new.pval)
+  fit=lm(responses ~ covariates)
+  fitsum=summary(fit)
+  pvalue=fitsum$coefficients[2:(ncol(covariates)+1),"Pr(>|t|)"]
+  fit.cov=covariates[,pvalue<=cutoff]
+  if(length(fit.cov)==0) return(c())
+  fit.new=lm(responses~fit.cov)
+  fitsum.new=summary(fit.new)
+  pvalue.new=fitsum.new$coefficients[,"Pr(>|t|)"]
+  return(pvalue.new)
 }
 
 run_simulation=function(n_trials, n, p, cutoff){
