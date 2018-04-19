@@ -17,3 +17,15 @@ model_select=function(covariates, responses,cutoff){
   new.pval=new.sum$coefficients[,"Pr(>|t|)"]
   return(new.pval)
 }
+
+run_simulation=function(n_trials, n, p, cutoff){
+  p.vals=c()
+  for (i in 1:n_trials){
+    res=generate_data(n,p)
+    covariates=res$covariates
+    responses=res$responses
+    pval=model_select(covariates,responses, cutoff)
+    p.vals=c(p.vals,pval)
+  }
+  hist(p.vals)
+}
