@@ -27,5 +27,11 @@ run_simulation=function(n_trials, n, p, cutoff){
     pval=model_select(covariates,responses, cutoff)
     p.vals=c(p.vals,pval)
   }
-  hist(p.vals)
+  save(p.vals,file="pvalues") 
+}
+
+make_plot=function(datapath){
+  data=load(datapath)
+  print(data)
+  hist(data)
 }
